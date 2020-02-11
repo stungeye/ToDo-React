@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./styles.css";
+import 'bulma/css/bulma.css'
 import ListItems from "./ListItems.js";
 
 export default class App extends Component {
