@@ -1,12 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faBroom } from "@fortawesome/free-solid-svg-icons";
 
 function ListItems(props) {
   const listItems = props.items.map(item => {
     return (
       <div key={item.timestamp} className="panel-block">
-
         <label className="control is-expanded">
           <input
             type="checkbox"
@@ -21,7 +20,6 @@ function ListItems(props) {
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>
-
       </div>
     );
   });
@@ -36,8 +34,7 @@ function ListItems(props) {
 
   return (
     <nav className="panel is-info">
-
-      <p className="panel-heading">To Do Items</p>
+      <p className="panel-heading">Things You Need To Do</p>
 
       {panelContents}
 
@@ -47,11 +44,11 @@ function ListItems(props) {
             className="button is-link is-outlined is-fullwidth is-danger"
             onClick={props.clearCompleted}
           >
-            Clear Complete Items
+            <FontAwesomeIcon icon={faBroom} />
+            &nbsp; Clear Complete Items
           </button>
         </div>
       )}
-
     </nav>
   );
 }

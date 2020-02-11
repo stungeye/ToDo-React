@@ -1,3 +1,15 @@
 form {
   margin-bottom: 2rem;
 }
+
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* FOUC fix when paired with the CSS in the index.html style tag. */
+html {
+  visibility: visible;
+  opacity: 1;
+  transition: 2s ease;
+}

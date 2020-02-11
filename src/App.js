@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ListItems from "./ListItems.js";
 import serializedStorage from "./serializedStorage.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 import "bulma/css/bulma.css";
 import "./styles.css";
@@ -75,8 +77,6 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="title">Getting Things Done!</h1>
-
         <form id="to-do-form" onSubmit={this.addItem}>
           <div className="field has-addons">
             <div className="control is-expanded">
@@ -90,7 +90,9 @@ export default class App extends Component {
             </div>
 
             <div className="control">
-              <button className="button is-primary">Add</button>
+              <button className="button is-primary">
+                <FontAwesomeIcon icon={faPlusCircle} />
+              </button>
             </div>
           </div>
         </form>
