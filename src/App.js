@@ -1,25 +1,30 @@
 import React, { Component } from "react";
 import ListItems from "./ListItems.js";
+import serializedStorage from "./serializedStorage.js";
 
-import 'bulma/css/bulma.css'
+import "bulma/css/bulma.css";
 import "./styles.css";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toDoItems: [],
+      toDoItems: serializedStorage.fetch(),
       currentItem: ""
     };
 
     this.toDoInput = React.createRef();
   }
 
+  saveToStorage = () => {
+    serializedStorage.save(this.state.toDoItems);
+  };
+
   handleInput = () => {
     this.setState({ currentItem: this.toDoInput.current.value });
-  }
+  };
 
-  addItem = (event) => {
+  addItem = event => {
     event.preventDefault();
 
     const newItem = this.state.currentItem.trim();
@@ -29,22 +34,25 @@ export default class App extends Component {
         ...this.state.toDoItems,
         { text: newItem, done: false, timestamp: Date.now() }
       ];
-      this.setState({ toDoItems: newToDoItems, currentItem: "" });
+      this.setState(
+        { toDoItems: newToDoItems, currentItem: "" },
+        this.saveToStorage
+      );
     }
 
     this.toDoInput.current.focus();
-  }
+  };
 
-  deleteItem = (timestamp) => {
+  deleteItem = timestamp => {
     const newToDoItems = [...this.state.toDoItems].filter(item => {
       return item.timestamp !== timestamp;
     });
 
-    this.setState({ toDoItems: newToDoItems });
+    this.setState({ toDoItems: newToDoItems }, this.saveToStorage);
     this.toDoInput.current.focus();
-  }
+  };
 
-  markItemComplete = (timestamp) => {
+  markItemComplete = timestamp => {
     const newToDoItems = [...this.state.toDoItems].map(item => {
       if (item.timestamp === timestamp) {
         item.done = !item.done;
@@ -52,27 +60,25 @@ export default class App extends Component {
       return item;
     });
 
-    this.setState({ toDoItems: newToDoItems });
-  }
+    this.setState({ toDoItems: newToDoItems }, this.saveToStorage);
+  };
 
   clearCompleted = () => {
     const newToDoItems = this.state.toDoItems.filter(item => {
       return !item.done;
     });
 
-    this.setState({ toDoItems: newToDoItems });
+    this.setState({ toDoItems: newToDoItems }, this.saveToStorage);
     this.toDoInput.current.focus();
-  }
+  };
 
   render() {
     return (
       <div className="App">
-
         <h1 className="title">Getting Things Done!</h1>
 
         <form id="to-do-form" onSubmit={this.addItem}>
           <div className="field has-addons">
-
             <div className="control is-expanded">
               <input
                 className="input"
@@ -86,7 +92,6 @@ export default class App extends Component {
             <div className="control">
               <button className="button is-primary">Add</button>
             </div>
-
           </div>
         </form>
 
@@ -96,7 +101,6 @@ export default class App extends Component {
           markItemComplete={this.markItemComplete}
           clearCompleted={this.clearCompleted}
         />
-
       </div>
     );
   }
