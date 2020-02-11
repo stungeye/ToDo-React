@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import "./styles.css";
-import 'bulma/css/bulma.css'
 import ListItems from "./ListItems.js";
+
+import 'bulma/css/bulma.css'
+import "./styles.css";
 
 export default class App extends Component {
   constructor(props) {
